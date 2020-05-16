@@ -17,7 +17,37 @@
       <h1>OpenWeather API Weather Dashboard</h1>
     </header>
 
-    <main></main>
+    <main class="container-fluid">
+      <aside class="row">
+        <section class="col-lg-4 search">
+          <form class="form-inline">
+            <section class="form-group d-inline">
+              <input
+                type="text"
+                class="form-control"
+                id="searchCity"
+                placeholder="City To Search For"
+              />
+              <button type="submit" class="btn btn-primary" id="searchButton">
+                Search
+              </button>
+            </section>
+          </form>
+        </section>
+        <section class="col-lg-8 results">
+          <section class="container-fluid" id="currentWeather">
+            <h3 id="city" class="d-inline">Placeholder Name</h3>
+            <span id="date">Placeholder Date</span>
+            <br />
+            <p id="currentWeather">Placeholder Weather</p>
+            <p id="currentTemp">Placeholder Temperature</p>
+            <p id="currentHumidity">Placeholder Humidity</p>
+            <p id="currentWindSpeed">Placeholder Wind Speed</p>
+            <p id="currentUV">Placeholder UV Index</p>
+          </section>
+        </section>
+      </aside>
+    </main>
 
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
