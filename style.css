@@ -1,0 +1,19 @@
+.search{
+    outline-style: solid;
+    outline-color:black;
+}
+
+.results{
+    outline-style: solid;
+    outline-color:black;
+}
+
+#currentWeather{
+    outline-style: solid;
+    outline-color:black;
+}
+
+#fiveDayForecast{
+    outline-style: solid;
+    outline-color:black;
+}

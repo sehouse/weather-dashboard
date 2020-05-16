@@ -11,6 +11,7 @@
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
@@ -18,35 +19,55 @@
     </header>
 
     <main class="container-fluid">
-      <aside class="row">
-        <section class="col-lg-4 search">
-          <form class="form-inline">
-            <section class="form-group d-inline">
-              <input
-                type="text"
-                class="form-control"
-                id="searchCity"
-                placeholder="City To Search For"
-              />
-              <button type="submit" class="btn btn-primary" id="searchButton">
-                Search
-              </button>
+        <section class="row">
+            <aside class="col-lg-4 search">
+                <form class="form-inline">
+                    <section class="form-group d-inline">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="searchCity"
+                            placeholder="City To Search For"
+                        />
+                        <button type="submit" class="btn btn-primary" id="searchButton">
+                            Search
+                        </button>
+                    </section>
+                </form>
+            </aside>
+            <section class="col-lg-8 results">
+                <section class="container-fluid" id="currentWeather">
+                    <h3 id="city" class="d-inline">Placeholder Name</h3>
+                    <span id="date">Placeholder Date</span>
+                    <br />
+                    <p id="currentWeatherType">Placeholder Weather</p>
+                    <p id="currentTemp">Placeholder Temperature</p>
+                    <p id="currentHumidity">Placeholder Humidity</p>
+                    <p id="currentWindSpeed">Placeholder Wind Speed</p>
+                    <p id="currentUV">Placeholder UV Index</p>
+                </section>
+                <section class="container-fluid" id="fiveDayForecast">
+                    <h3 id="fiveDay">Five Day Placeholder</h3>
+                    <section class="row">
+                        <section class="col-sm-2 five-day" id="day1">
+                            Day 1 Info
+                        </section>
+                        <section class="col-sm-2 five-day" id="day2">
+                            Day 2 Info
+                        </section>
+                        <section class="col-sm-2 five-day" id="day3">
+                            Day 3 Info
+                        </section>
+                        <section class="col-sm-2 five-day" id="day4">
+                            Day 4 Info
+                        </section>
+                        <section class="col-sm-2 five-day" id="day5">
+                            Day 5 Info
+                        </section>
+                    </section>
+                </section>
             </section>
-          </form>
-        </section>
-        <section class="col-lg-8 results">
-          <section class="container-fluid" id="currentWeather">
-            <h3 id="city" class="d-inline">Placeholder Name</h3>
-            <span id="date">Placeholder Date</span>
-            <br />
-            <p id="currentWeather">Placeholder Weather</p>
-            <p id="currentTemp">Placeholder Temperature</p>
-            <p id="currentHumidity">Placeholder Humidity</p>
-            <p id="currentWindSpeed">Placeholder Wind Speed</p>
-            <p id="currentUV">Placeholder UV Index</p>
-          </section>
-        </section>
-      </aside>
+      </section>
     </main>
 
     <script
@@ -64,5 +85,6 @@
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
       crossorigin="anonymous"
     ></script>
+    <script src="script.js"></script>
   </body>
 </html>
