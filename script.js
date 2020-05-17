@@ -63,11 +63,12 @@ function apiCall(queryUrl) {
             newSection.prepend(newCity);
             $("#city").text(response.name);
             $("#date").text(" (" + moment().format('l') + ")");
+            $("#currentWeatherImage").attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
             $("#currentWeatherType").text("'" + response.weather[0].description + "'");
             var temp = response.main.temp.toFixed(1);
-            $("#currentTemp").html("Temperature: " + temp);
+            $("#currentTemp").html("Temperature: " + temp + " &#8457");
             $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
-            $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + "MPH");
+            $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " MPH");
             latitude = response.coord.lat;
             longitude = response.coord.lon;
             searchedCityArray();
@@ -125,10 +126,11 @@ function fiveDayForecast() {
 
             var j = (i * 8) - 2;
             var newDate = $("<p>").text(moment().add(i, "days").format('l'));
-            var newTemp = $("<p>").text("Temp: " + response.list[j].main.temp.toFixed(1));
+            var newWeatherImage = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + response.list[j].weather[0].icon + "@2x.png");
+            var newTemp = $("<p>").text("Temp: " + response.list[j].main.temp.toFixed(1) + " " + String.fromCharCode(176) + "F");
             var newHumidity = $("<p>").text("Humidity: " + response.list[j].main.humidity + "%");
             $("#day" + i).empty();
-            $("#day" + i).append(newDate, newTemp, newHumidity);
+            $("#day" + i).append(newDate, newWeatherImage, newTemp, newHumidity);
         }
     });
 }
