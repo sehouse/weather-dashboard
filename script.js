@@ -5,11 +5,42 @@ var queryUrl;
 var latitude;
 var longitude;
 
+//Creation of our cityArray, to save previously searched cities to local storage.
+var cityArray = JSON.parse(localStorage.getItem("cityArray") || "[]");
+if (cityArray[0]) {
+  city = cityArray[cityArray.length - 1];
+  searchedCityArray();
+    queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=9f127df86a905480471060870ba864e6";
+  apiCall(queryUrl);
+}
+
+//generates and updates list of previously searched cities. Stores updates in Local Stotage
+
+function searchedCityArray() {
+  $("#savedCity").empty();
+  if (cityArray) {
+    for (var i = 0; i < cityArray.length; i++) {
+      if (city === cityArray[i]) {
+        cityArray.splice(i, 1);
+      }
+    }
+  }
+  cityArray.push(city);
+  localStorage.setItem("cityArray", JSON.stringify(cityArray));
+  if (cityArray) {
+    for (var i = 0; i < cityArray.length; i++) {
+      newSection = $("<section>").addClass("citySection");
+      $("#savedCity").prepend(newSection);
+      var newCity = $("<a>").text(cityArray[i]).addClass("newCity px-2");
+      newSection.prepend(newCity);
+    }
+  }
+}
+
 // Click event to pull search data from input field
 
 $("#searchButton").on("click", function (event) {
     event.preventDefault();
-
     city = $("#searchCity").val();
     $("#searchCity").val("");
     queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=9f127df86a905480471060870ba864e6";
@@ -24,9 +55,12 @@ function apiCall(queryUrl) {
         url: queryUrl,
         method: "GET",
         success: function (response) {
-
             console.log(response);
             city = response.name;
+            newSection = $("<section>").addClass("citySection");
+            $("#savedCity").prepend(newSection);
+            var newCity = $("<a>").text(city).addClass("newCity px-2");
+            newSection.prepend(newCity);
             $("#city").text(response.name);
             $("#date").text(" (" + moment().format('l') + ")");
             $("#currentWeatherType").text("'" + response.weather[0].description + "'");
@@ -36,6 +70,7 @@ function apiCall(queryUrl) {
             $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + "MPH");
             latitude = response.coord.lat;
             longitude = response.coord.lon;
+            searchedCityArray();
             uvIndex();
             fiveDayForecast();
         }
@@ -46,14 +81,14 @@ function apiCall(queryUrl) {
 //Function to send a request to OpenWeather API for the UV Index values for the searched city, as it uses a different API call to get that data.
 
 function uvIndex() {
-    var queryUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial&APPID=bfc1b977d5f0ad912b3dc6c21e34e887";
+    var queryUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial&APPID=9f127df86a905480471060870ba864e6";
     $.ajax({
         url: queryUrl,
         method: "GET"
     }).then(function (response) {
         console.log(response);
         var uv = response.value;
-        uvText = "white";
+        uvText = "gainsboro";
         if (uv < 3) {
             uvColor = "green";
         }
@@ -77,7 +112,7 @@ function uvIndex() {
 //Function to send a request to OpenWeather API for the 5 day forecast for the searched city. Requires some fun math to make sure that you only get 1 result per day.
 
 function fiveDayForecast() {
-    var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&APPID=bfc1b977d5f0ad912b3dc6c21e34e887";
+    var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&APPID=9f127df86a905480471060870ba864e6";
     $.ajax({
         url: queryUrl,
         method: "GET"
@@ -97,3 +132,18 @@ function fiveDayForecast() {
         }
     });
 }
+//Clears the searched cities list.
+
+$("#clearButton").on("click", function () {
+    localStorage.clear();
+    $("#savedCity").empty();
+    cityArray = [];
+});
+
+//Makes the previously searched cities push their API data to the display, when they are clicked.
+$(document).on("click", ".citySection", function (event) {
+    city = $(this).text();
+    $(this).remove();
+    queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=9f127df86a905480471060870ba864e6";
+    apiCall(queryUrl);
+});
