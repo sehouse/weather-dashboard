@@ -37,6 +37,7 @@ function apiCall(queryUrl) {
             latitude = response.coord.lat;
             longitude = response.coord.lon;
             uvIndex();
+            fiveDayForecast();
         }
 
     })
@@ -50,6 +51,7 @@ function uvIndex() {
         url: queryUrl,
         method: "GET"
     }).then(function (response) {
+        console.log(response);
         var uv = response.value;
         uvText = "white";
         if (uv < 3) {
@@ -69,5 +71,27 @@ function uvIndex() {
         }
         $('#currentUV').html("UV Index: <span>" + uv + "</span>");
         $('#currentUV span').css({ "background-color": uvColor, "color": uvText, "border-radius": "5px" }).addClass("px-2");
+    });
+}
+
+function fiveDayForecast() {
+    var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&APPID=bfc1b977d5f0ad912b3dc6c21e34e887";
+    $.ajax({
+        url: queryUrl,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+        $("#fiveDay").text("5 Day Forecast:");
+        for (var i = 1; i < 6; i++) {
+
+            //This "j" variable helps us to get the forcast for around the current time for each subsequent day
+
+            var j = (i * 8) - 2;
+            var newDate = $("<p>").text(moment().add(i, "days").format('l'));
+            var newTemp = $("<p>").text("Temp: " + response.list[j].main.temp.toFixed(1));
+            var newHumidity = $("<p>").text("Humidity: " + response.list[j].main.humidity + "%");
+            $("#day" + i).empty();
+            $("#day" + i).append(newDate, newTemp, newHumidity);
+        }
     });
 }
