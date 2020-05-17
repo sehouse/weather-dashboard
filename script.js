@@ -74,6 +74,8 @@ function uvIndex() {
     });
 }
 
+//Function to send a request to OpenWeather API for the 5 day forecast for the searched city. Requires some fun math to make sure that you only get 1 result per day.
+
 function fiveDayForecast() {
     var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&APPID=bfc1b977d5f0ad912b3dc6c21e34e887";
     $.ajax({
