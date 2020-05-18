@@ -57,7 +57,6 @@ function apiCall(queryUrl) {
         url: queryUrl,
         method: "GET",
         success: function (response) {
-            console.log(response);
             city = response.name;
             newSection = $("<section>").addClass("citySection");
             $("#savedCity").prepend(newSection);
@@ -89,7 +88,6 @@ function uvIndex() {
         url: queryUrl,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         var uv = response.value;
         uvText = "gainsboro";
         if (uv < 3) {
@@ -120,7 +118,6 @@ function fiveDayForecast() {
         url: queryUrl,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         $("#fiveDay").text("5 Day Forecast:");
         for (var i = 1; i < 6; i++) {
 
