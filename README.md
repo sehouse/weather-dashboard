@@ -14,3 +14,7 @@
 - Ability to clear search data from local storage.
 - Current weather forecast, including images, weather descriptions, temperature, wind speed, humidity, and UV index.
 - Extended five day forecast, including images, temperature, and humidity.
+
+<img src="https://github.com/sehouse/weather-dashboard/blob/master/assets/scott-house-weather-dashboard.png"
+     alt="Scott House Weather Dashboard"
+     style="float: center" />
