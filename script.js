@@ -6,35 +6,37 @@ var latitude;
 var longitude;
 
 //Creation of our cityArray, to save previously searched cities to local storage.
+
 var cityArray = JSON.parse(localStorage.getItem("cityArray") || "[]");
+
 if (cityArray[0]) {
-  city = cityArray[cityArray.length - 1];
-  searchedCityArray();
+    city = cityArray[cityArray.length - 1];
+    searchedCityArray();
     queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=9f127df86a905480471060870ba864e6";
-  apiCall(queryUrl);
+    apiCall(queryUrl);
 }
 
-//generates and updates list of previously searched cities. Stores updates in Local Stotage
+//Generates and updates list of previously searched cities. Stores updates in Local Stotage
 
 function searchedCityArray() {
-  $("#savedCity").empty();
-  if (cityArray) {
-    for (var i = 0; i < cityArray.length; i++) {
-      if (city === cityArray[i]) {
-        cityArray.splice(i, 1);
-      }
+    $("#savedCity").empty();
+    if (cityArray) {
+        for (var i = 0; i < cityArray.length; i++) {
+            if (city === cityArray[i]) {
+                cityArray.splice(i, 1);
+            }
+        }
     }
-  }
-  cityArray.push(city);
-  localStorage.setItem("cityArray", JSON.stringify(cityArray));
-  if (cityArray) {
-    for (var i = 0; i < cityArray.length; i++) {
-      newSection = $("<section>").addClass("citySection");
-      $("#savedCity").prepend(newSection);
-      var newCity = $("<a>").text(cityArray[i]).addClass("newCity px-2");
-      newSection.prepend(newCity);
+    cityArray.push(city);
+    localStorage.setItem("cityArray", JSON.stringify(cityArray));
+    if (cityArray) {
+        for (var i = 0; i < cityArray.length; i++) {
+            newSection = $("<section>").addClass("citySection");
+            $("#savedCity").prepend(newSection);
+            var newCity = $("<a>").text(cityArray[i]).addClass("newCity px-2");
+            newSection.prepend(newCity);
+        }
     }
-  }
 }
 
 // Click event to pull search data from input field
@@ -64,11 +66,11 @@ function apiCall(queryUrl) {
             $("#city").text(response.name);
             $("#date").text(" (" + moment().format('l') + ")");
             $("#currentWeatherImage").attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
-            $("#currentWeatherType").text("'" + response.weather[0].description + "'");
+            $("#currentWeatherType").html("'<i>" + response.weather[0].description + "</i>'");
             var temp = response.main.temp.toFixed(1);
-            $("#currentTemp").html("Temperature: " + temp + " &#8457");
-            $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
-            $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " MPH");
+            $("#currentTemp").html("<b><u>Temperature:</u></b> " + temp + " &#8457");
+            $("#currentHumidity").html("<b><u>Humidity:</u></b> " + response.main.humidity + "%");
+            $("#currentWindSpeed").html("<b><u>Wind Speed:</u></b> " + response.wind.speed + " MPH");
             latitude = response.coord.lat;
             longitude = response.coord.lon;
             searchedCityArray();
@@ -105,7 +107,7 @@ function uvIndex() {
         else {
             uvColor = "purple";
         }
-        $('#currentUV').html("UV Index: <span>" + uv + "</span>");
+        $('#currentUV').html("<b><u>UV Index:</u></b> <span>" + uv + "</span>");
         $('#currentUV span').css({ "background-color": uvColor, "color": uvText, "border-radius": "5px" }).addClass("px-2");
     });
 }
@@ -125,10 +127,10 @@ function fiveDayForecast() {
             //This "j" variable helps us to get the forcast for around the current time for each subsequent day
 
             var j = (i * 8) - 2;
-            var newDate = $("<p>").text(moment().add(i, "days").format('l'));
+            var newDate = $("<p id='date'>").text(moment().add(i, "days").format('l'));
             var newWeatherImage = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + response.list[j].weather[0].icon + "@2x.png");
-            var newTemp = $("<p>").text("Temp: " + response.list[j].main.temp.toFixed(1) + " " + String.fromCharCode(176) + "F");
-            var newHumidity = $("<p>").text("Humidity: " + response.list[j].main.humidity + "%");
+            var newTemp = $("<p>").html("<i><u>Temp:</u></i> " + response.list[j].main.temp.toFixed(1) + " " + String.fromCharCode(176) + "F");
+            var newHumidity = $("<p>").html("<i><u>Humidity:</u></i> " + response.list[j].main.humidity + "%");
             $("#day" + i).empty();
             $("#day" + i).append(newDate, newWeatherImage, newTemp, newHumidity);
         }
@@ -143,6 +145,7 @@ $("#clearButton").on("click", function () {
 });
 
 //Makes the previously searched cities push their API data to the display, when they are clicked.
+
 $(document).on("click", ".citySection", function (event) {
     city = $(this).text();
     $(this).remove();

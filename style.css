@@ -1,19 +1,79 @@
+header{
+    background-color: slategrey;
+    color: gainsboro;
+}
+
+h1{
+    text-align: center;
+    margin: 0px;
+    border-bottom-style: solid;
+    border-color: black;
+}
+
+body{
+    background-color: gainsboro;  
+}
+
 .search{
-    outline-style: solid;
-    outline-color:black;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-color:black;
+    background-color: darkgrey;
+}
+
+.citySection {
+  border: 1px solid grey;
+  margin-top: 0px;
+  padding-top: 2px;
+  background-color: gainsboro;
+}
+
+.citySection a {
+  font-size: 20px;
+}
+
+.citySection:hover {
+  background-color: slategrey;
+  color: white;
 }
 
 .results{
-    outline-style: solid;
-    outline-color:black;
+    margin-top: 15px;
 }
 
 #currentWeather{
-    outline-style: solid;
-    outline-color:black;
+    box-shadow: 0 0 3pt 2pt black;
+    background-color: lightsteelblue;
+}
+
+#currentWeatherType{
+    text-transform: capitalize;
+}
+#cityName{
+    border-bottom-style: solid;
+    border-color: black
 }
 
 #fiveDayForecast{
-    outline-style: solid;
-    outline-color:black;
+    box-shadow: 0 0 3pt 2pt black;
+    background-color: powderblue
+}
+
+#fiveDay{
+    border-bottom-style: solid;
+    border-color: black;
+}
+
+.five-day{
+    border-style: solid;
+    border-color: black;
+    border-radius: 25px;
+    margin: 5px;
+    background-color: powderblue
+}
+
+p#date{
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
 }
